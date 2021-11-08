@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.barra-left {
+  position: absolute;
+  top: -30px;
+  left: 0px;
+}
+
+.barra-right {
+  position: absolute;
+  top: -30px;
+  right: -10px;
+}
+
+#mercurio {
+  width: 0;
+}
+
+#puntero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 58px;
+  height: 58px;
+  margin-top: 8px;
+  position: absolute;
+  left: -23px;
+  z-index: 50;
+}
+
+#puntero svg {
+  fill: orange;
+}
+
+#puntero p {
+  top: 20px;
+}
+
+#flecha-puntero {
+  left: -4px;
+  top: 55px;
+}
+
+.movimientos {
+  position: relative;
+}
+
+.movimientos:hover {
+  background-color: #dadada;
+}
+
+.movimientos:hover::after {
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  content: "X";
+  width: 26px;
+  height: 26px;
+  border-radius: 50px;
+  background-color: #888888;
+  color: white;
+  font-weight: 600;
+}
