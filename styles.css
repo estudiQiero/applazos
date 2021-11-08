@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -44,10 +45,14 @@
 
 .movimientos {
   position: relative;
+  width: 7rem;
+  margin: .4rem;
+  padding: .5rem;
 }
 
 .movimientos:hover {
   background-color: #dadada;
+  border-radius: 6px;
 }
 
 .movimientos:hover::after {
@@ -64,4 +69,21 @@
   background-color: #888888;
   color: white;
   font-weight: 600;
+}
+
+.movimientos li {
+  min-width: min-content;
+  font-size: .8rem;
+  line-height: 1.1rem;
+}
+
+.movimientos li:nth-child(1) {
+  border-bottom: 1px solid lightgrey;
+  margin-bottom: 10px;
+  font-weight: 600;
+  padding-bottom: 6px;
+}
+
+.movimientos li:nth-child(4)::after {
+  content: "€";
 }

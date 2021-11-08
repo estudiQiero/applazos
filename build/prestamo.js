@@ -10,13 +10,20 @@ let fraseCom = "";
 document.getElementById("tituloPrincipal").innerHTML = titulo;
 document.getElementById("prestamo").innerHTML = total;
 
+// variables del formulario
+let numMov = "";
+let montMov = "";
+let fechaMov = "";
+let plataformaMov = "";
 
 // Captura de formulario
 function obtenerDatos() {
-    let numMov = document.getElementById('numMov').value;
-    let montMov = document.getElementById('montMov').value;
-    let fechaMov = document.getElementById('fechaMov').value;
-    let plataformaMov = document.getElementById('plataformaMov').value;
+    numMov = document.getElementById('numMov').value;
+    montMov = document.getElementById('montMov').value;
+    fechaMov = document.getElementById('fechaMov').value;
+    plataformaMov = document.getElementById('plataformaMov').value;
+
+    almacenarDatos();
 
     // Impedir que se siga sumando cuando se llega al 100% de la deuda. Si montMov + sumaMovs > total
     let diferencia = total - sumaMovs;
@@ -29,7 +36,7 @@ function obtenerDatos() {
         document.getElementById('svgPuntero').style.fill = "#3cea3c";
         document.getElementById('mercurio').style.width = '105%';
         document.getElementById('mercurio').style.backgroundColor = '#3cea3c';
-        
+
     } else if (montMov > diferencia) {
         montMov = 0;
         fraseCom = "Tu ingreso debe ser menor a " + diferencia + "€ , que es la cantidad que te queda por devolver.";
@@ -73,3 +80,18 @@ function movimientoPuntero() {
     movMercurio.style.width = movPuntero + '%';
 }
 
+function almacenarDatos() {
+    let datosForm = [numMov, fechaMov, plataformaMov, montMov];
+    let ul = document.createElement('ul');
+    document.getElementById('listadoMov').appendChild(ul).classList.add("movimientos");
+    // for (i = 0; i < datosForm.length; i++) {
+    //     // console.log(datosForm[i]);
+    //     let lista = document.createElement('li');
+    //     console.log(lista);
+    // }
+    datosForm.forEach(function (dato) {
+        let lista = document.createElement('li');
+        ul.appendChild(lista);
+        lista.innerHTML += dato;
+    })
+}
