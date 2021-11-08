@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App de prestamos</title>
+    <link rel="stylesheet" href="build/styles.css">
+</head>
+
+<!-- Convierte datos del form HTML a objetos JSON -->
+<!-- https://www.learnwithjason.dev/blog/get-form-values-as-json/ -->
+
+<!-- Node.js y MySql -->
+<!-- https://www.w3schools.com/nodejs/nodejs_mysql.asp -->
+
+<body>
+    <div class="p-6 text-gray-700">
+        <main class="bg-gray-100 rounded-lg p-6 mb-4 box-content">
+            <h1 id="tituloPrincipal" class="text-3xl font-medium leading-6 m-4 text-center">Título Principal</h1>
+            <!-- barra progreso -->
+            <div class="flex justify-center">
+                <div class="w-full h-12 mt-14 mb-20 max-w-md relative">
+                    <p class="barra-left">0€</p>
+                    <p class="barra-right"><span id="prestamo">0</span>€</p>
+                    <div
+                        class="w-full h-full bg-gray-500 rounded-full max-w-md border-8 border-gray-500 overflow-hidden">
+                        <div id="mercurio"
+                            class="flex justify-start w-0 h-full bg-yellow-500 rounded-tl-full rounded-bl-full">
+                        </div>
+                    </div>
+                    <!-- puntero -->
+                    <div id="puntero">
+                        <svg id="svgPuntero" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42 46.94">
+                            <path class="cls-1" d="M26.75,5.75,21,0,15.25,5.75a21,21,0,1,0,11.5,0Z" />
+                        </svg>
+                        <p id="totalPuntero" class="text-gray-600 z-50 absolute">0<span>€</span></p>
+                    </div>
+                </div>
+            </div>
+            <!-- frase motivacional -->
+            <h3 id="fraseCom" class="text-center font-medium text-lg h-12 pt-3"></h3>
+        </main>
+        <div class="flex flex-col md:flex-row gap-x-8">
+            <!-- FORMULARIO -->
+            <section class="bg-gray-100 rounded-lg p-6 my-4 md:w-6/12">
+                <h5 class="text-center uppercase mb-10">Formulario</h5>
+                <form class="w-full max-w-lg m-auto">
+                    <!-- fila 1 -->
+                    <div class="flex justify-center flex-wrap -mx-3 mb-6">
+                        <!-- Mov numero -->
+                        <div class="w-full md:w-1/2 px-3 max-w-md">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                for="numMov">
+                                Movimiento Num.
+                            </label>
+                            <input id="numMov"
+                                class="appearance-none block w-full bg-white text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                                type="number" placeholder="001">
+                            <!-- <p class="text-red-500 text-xs italic">Please fill out this field.</p> -->
+                        </div>
+                        <!-- Montante -->
+                        <div class="w-full md:w-1/2 px-3 max-w-md">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                for="montMov">
+                                Montante
+                            </label>
+                            <input id="montMov"
+                                class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                type="text" placeholder="40€">
+                        </div>
+                    </div>
+                    <!-- Fila 2 -->
+                    <div class="flex justify-center flex-wrap -mx-3 mb-6">
+                        <!-- Fecha Movimiento -->
+                        <div class="w-full md:w-1/2 px-3 max-w-md">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                for="fechaMov">
+                                Fecha Movimiento</label>
+                            <div x-data="app()" x-init="[initDate(), getNoOfDays()]" x-cloak>
+                                <div class="container">
+                                    <div class="mb-5">
+                                        <!-- <label for="datepicker" class="font-bold mb-1 text-gray-700 block">Select
+                                        Date</label> -->
+                                        <div class="relative z-50">
+                                            <input type="hidden" name="date" x-ref="date" />
+                                            <input id="fechaMov" type="text" readonly x-model="datepickerValue"
+                                                @click="showDatepicker = !showDatepicker"
+                                                @keydown.escape="showDatepicker = false"
+                                                class="w-full py-3 px-4 mb-3 leading-tight rounded shadow-sm focus:outline-none focus:shadow-outline text-gray-600 font-medium bg-white"
+                                                placeholder="Select date" />
+
+                                            <div class="absolute top-0 right-0 px-3 py-2">
+                                                <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24"
+                                                    stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                </svg>
+                                            </div>
+
+                                            <!-- <div x-text="no_of_days.length"></div>
+                                              <div x-text="32 - new Date(year, month, 32).getDate()"></div>
+                                              <div x-text="new Date(year, month).getDay()"></div> -->
+
+                                            <div class="bg-white mt-12 rounded-lg shadow p-4 absolute top-0 left-0"
+                                                style="width: 17rem" x-show.transition="showDatepicker"
+                                                @click.away="showDatepicker = false">
+                                                <div class="flex justify-between items-center mb-2">
+                                                    <div>
+                                                        <span x-text="MONTH_NAMES[month]"
+                                                            class="text-lg font-bold text-gray-800"></span>
+                                                        <span x-text="year"
+                                                            class="ml-1 text-lg text-gray-600 font-normal"></span>
+                                                    </div>
+                                                    <div>
+                                                        <button type="button"
+                                                            class="transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-white p-1 rounded-full"
+                                                            :class="{'cursor-not-allowed opacity-25': month == 0 }"
+                                                            :disabled="month == 0 ? true : false"
+                                                            @click="month--; getNoOfDays()">
+                                                            <svg class="h-6 w-6 text-gray-500 inline-flex" fill="none"
+                                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    stroke-width="2" d="M15 19l-7-7 7-7" />
+                                                            </svg>
+                                                        </button>
+                                                        <button type="button"
+                                                            class="transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-white p-1 rounded-full"
+                                                            :class="{'cursor-not-allowed opacity-25': month == 11 }"
+                                                            :disabled="month == 11 ? true : false"
+                                                            @click="month++; getNoOfDays()">
+                                                            <svg class="h-6 w-6 text-gray-500 inline-flex" fill="none"
+                                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    stroke-width="2" d="M9 5l7 7-7 7" />
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                <div class="flex flex-wrap mb-3 -mx-1">
+                                                    <template x-for="(day, index) in DAYS" :key="index">
+                                                        <div style="width: 14.26%" class="px-1">
+                                                            <div x-text="day"
+                                                                class="text-gray-800 font-medium text-center text-xs">
+                                                            </div>
+                                                        </div>
+                                                    </template>
+                                                </div>
+
+                                                <div class="flex flex-wrap -mx-1">
+                                                    <template x-for="blankday in blankdays">
+                                                        <div style="width: 14.28%" class="
+                                            text-center
+                                            border
+                                            p-1
+                                            border-transparent
+                                            text-sm"></div>
+                                                    </template>
+                                                    <template x-for="(date, dateIndex) in no_of_days" :key="dateIndex">
+                                                        <div style="width: 14.28%" class="px-1 mb-1">
+                                                            <div @click="getDateValue(date)" x-text="date"
+                                                                class="cursor-pointer text-center text-sm leading-none rounded-full leading-loose transition ease-in-out duration-100"
+                                                                :class="{'bg-blue-500 text-white': isToday(date) == true, 'text-gray-700 hover:bg-blue-200': isToday(date) == false }">
+                                                            </div>
+                                                        </div>
+                                                    </template>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                            for="grid-city">
+                            City
+                        </label>
+                        <input
+                            class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                            id="grid-city" type="text" placeholder="Albuquerque">
+                    -->
+                        </div>
+                        <!-- Plataforma de traspaso -->
+                        <div class="w-full md:w-1/2 px-3 max-w-md mb-10">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                for="plataformaMov">
+                                Forma de Pago
+                            </label>
+                            <div class="relative">
+                                <select id="plataformaMov"
+                                    class="block appearance-none w-full bg-white border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                    <option>Visa</option>
+                                    <option>Bizum</option>
+                                    <option>Efectivo</option>
+                                    <option>Transferencia</option>
+                                </select>
+                                <div
+                                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20">
+                                        <path
+                                            d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="obtenerDatos()"
+                            class="bg-yellow-500  active:bg-purple-600 font-bold uppercase text-base px-8 py-3 rounded-full text-gray-600 shadow-md hover:shadow-lg outline-none focus:o mb-1 ease-lineartransition-allduration-150"
+                            type="button"><i class="fas fa-gem"></i> Añadir movimiento</button>
+                </form>
+            </section>
+            <section class="bg-gray-100 rounded-lg p-6 my-4 md:w-6/12">
+                <h5 class="text-center uppercase mb-10">Movimientos</h5>
+                <div class=" flex flex-wrap text-sm text-gray-500">
+                    <ul class="movimientos w-28 m-2 border-r-2 border-light-blue-500 rounded border-opacity-50 p-3">
+                        <li id="listNumMov" class="min-w-min">000</li>
+                        <li id="listMontMov" class="min-w-min">0<span>€</span></li>
+                        <li id="listFechaMov" class="min-w-min"></li>
+                        <li id="listPlataformaMov" class="min-w-min">Transferencia</li>
+                    </ul>
+                    <!-- <ul class="w-28 m-2 border-r-2 border-light-blue-500 border-opacity-50">
+                        <li id="numMov" class="min-w-min">003</li>
+                        <li id="totalMov" class="min-w-min">40€</li>
+                        <li id="fechaMov" class="min-w-min">23.9.2021</li>
+                        <li id="plataformaMov" class="min-w-min">Bizum</li>
+                    </ul>
+                    <ul class="w-28 m-2 border-r-2 border-light-blue-500 border-opacity-50">
+                        <li id="numMov" class="min-w-min">002</li>
+                        <li id="totalMov" class="min-w-min">15€</li>
+                        <li id="fechaMov" class="min-w-min">18.8.2021</li>
+                        <li id="plataformaMov" class="min-w-min">Bizum</li>
+                    </ul>
+                    <ul class="w-28 m-2 border-r-2 border-light-blue-500 border-opacity-50">
+                        <li id="numMov" class="min-w-min">001</li>
+                        <li id="totalMov" class="min-w-min">20€</li>
+                        <li id="fechaMov" class="min-w-min">10.7.2021</li>
+                        <li id="plataformaMov" class="min-w-min">Bizum</li>
+                    </ul> -->
+                </div>
+            </section>
+        </div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script>
+    <script src="/build/script.js"></script>
+    <script src="/build/prestamo.js"></script>
+</body>
+
+</html>
