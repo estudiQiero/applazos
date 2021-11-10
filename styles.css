@@ -2,6 +2,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.naranja {
+  background-color: #ffb900;
+}
+
 .barra-left {
   position: absolute;
   top: -30px;
@@ -31,7 +35,7 @@
 }
 
 #puntero svg {
-  fill: orange;
+  fill: #ffb900;
 }
 
 #puntero p {
@@ -62,7 +66,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  content: "X";
+  font: normal normal normal 14px/1 FontAwesome;
+  content: "\f00d";
   width: 26px;
   height: 26px;
   border-radius: 50px;

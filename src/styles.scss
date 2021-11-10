@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+$naranja: #ffb900;
+
+.naranja {
+    background-color: $naranja;
+}
 
 .barra-left {
     position: absolute;
@@ -33,7 +38,7 @@
     z-index: 50;
 
     svg {
-        fill: orange;
+        fill: $naranja;
     }
 
     p {
@@ -63,7 +68,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            content: "X";
+            font: normal normal normal 14px/1 FontAwesome;
+            content: "\f00d";
             width: 26px;
             height: 26px;
             border-radius: 50px;

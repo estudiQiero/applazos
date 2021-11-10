@@ -51,6 +51,7 @@ function obtenerDatos() {
         movimientoPuntero();
 
         if (montMov == 0) {
+            totalPuntero.innerHTML = 0 + "€";
             fraseCom = "No has añadido dinero a la cuenta, inténtalo de nuevo."
         } else if ((montMov > 0) && (montMov < 15)) {
             fraseCom = "No está mal el ingreso, algo es algo. La próxima vez intenta aportar un poco más."

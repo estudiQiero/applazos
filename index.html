@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>App de prestamos</title>
     <link rel="stylesheet" href="build/styles.css">
+    <script defer src="/node_modules/@fortawesome/fontawesome-free/js/solid.js"></script>
+    <script defer src="/node_modules/@fortawesome/fontawesome-free/js/fontawesome.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 </head>
 
 <!-- Convierte datos del form HTML a objetos JSON -->
@@ -27,7 +30,7 @@
                     <div
                         class="w-full h-full bg-gray-500 rounded-full max-w-md border-8 border-gray-500 overflow-hidden">
                         <div id="mercurio"
-                            class="flex justify-start w-0 h-full bg-yellow-500 rounded-tl-full rounded-bl-full">
+                            class="flex justify-start w-0 h-full naranja rounded-tl-full rounded-bl-full">
                         </div>
                     </div>
                     <!-- puntero -->
@@ -45,7 +48,7 @@
         <div class="flex flex-col md:flex-row gap-x-8">
             <!-- FORMULARIO -->
             <section class="bg-gray-100 rounded-lg p-6 my-4 md:w-6/12">
-                <h5 class="text-center uppercase mb-10">Formulario</h5>
+                <h5 class="text-center uppercase mb-10"><i class="fas fa-edit"></i> Formulario</h5>
                 <form class="w-full max-w-lg m-auto">
                     <!-- fila 1 -->
                     <div class="flex justify-center flex-wrap -mx-3 mb-6">
@@ -57,7 +60,7 @@
                             </label>
                             <input id="numMov"
                                 class="appearance-none block w-full bg-white text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                                type="number" placeholder="001">
+                                type="number" placeholder="001" readonly="readonly">
                             <!-- <p class="text-red-500 text-xs italic">Please fill out this field.</p> -->
                         </div>
                         <!-- Montante -->
@@ -173,15 +176,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!--
-                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                            for="grid-city">
-                            City
-                        </label>
-                        <input
-                            class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                            id="grid-city" type="text" placeholder="Albuquerque">
-                    -->
                         </div>
                         <!-- Plataforma de traspaso -->
                         <div class="w-full md:w-1/2 px-3 max-w-md mb-10">
@@ -208,36 +202,18 @@
                             </div>
                         </div>
                         <button onclick="obtenerDatos()"
-                            class="bg-yellow-500  active:bg-purple-600 font-bold uppercase text-base px-8 py-3 rounded-full text-gray-600 shadow-md hover:shadow-lg outline-none focus:o mb-1 ease-lineartransition-allduration-150"
-                            type="button"><i class="fas fa-gem"></i> Añadir movimiento</button>
+                            class="naranja active:bg-yellow-300 font-bold uppercase text-base px-8 py-3 rounded-full text-gray-600 shadow-md hover:shadow-lg outline-none focus:o mb-1 ease-lineartransition-allduration-150"
+                            type="button"><i class="fas fa-plus-circle"></i> Añadir movimiento</button>
                 </form>
             </section>
             <section class="bg-gray-100 rounded-lg p-6 my-4 md:w-6/12">
-                <h5 class="text-center uppercase mb-10">Movimientos</h5>
+                <h5 class="text-center uppercase mb-10"><i class="fas fa-coins"></i> Movimientos</h5>
                 <div id="listadoMov" class="flex flex-wrap text-sm text-gray-500">
                     <!-- <ul class="movimientos">
                         <li>000</li>
                         <li>0<span>€</span></li>
                         <li></li>
                         <li>Transferencia</li>
-                    </ul> -->
-                    <!-- <ul class="w-28 m-2 border-r-2 border-light-blue-500 border-opacity-50">
-                        <li id="numMov" class="min-w-min">003</li>
-                        <li id="totalMov" class="min-w-min">40€</li>
-                        <li id="fechaMov" class="min-w-min">23.9.2021</li>
-                        <li id="plataformaMov" class="min-w-min">Bizum</li>
-                    </ul>
-                    <ul class="w-28 m-2 border-r-2 border-light-blue-500 border-opacity-50">
-                        <li id="numMov" class="min-w-min">002</li>
-                        <li id="totalMov" class="min-w-min">15€</li>
-                        <li id="fechaMov" class="min-w-min">18.8.2021</li>
-                        <li id="plataformaMov" class="min-w-min">Bizum</li>
-                    </ul>
-                    <ul class="w-28 m-2 border-r-2 border-light-blue-500 border-opacity-50">
-                        <li id="numMov" class="min-w-min">001</li>
-                        <li id="totalMov" class="min-w-min">20€</li>
-                        <li id="fechaMov" class="min-w-min">10.7.2021</li>
-                        <li id="plataformaMov" class="min-w-min">Bizum</li>
                     </ul> -->
                 </div>
             </section>
@@ -247,6 +223,7 @@
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script>
     <script src="/build/script.js"></script>
     <script src="/build/prestamo.js"></script>
+    <script src="build/connectFirebase.js" type="module"></script>
 </body>
 
 </html>
