@@ -5,4 +5,6 @@ Applazos es una aplicación de una sola página (OPA) que permite controlar, de 
 
 De momento todo es funcional, aunque no almacena los datos ni en local ni en ninguna BD, ya que la intención es apoyarme en Firebase.
 
+![Screenshot](/img/Applazos-image.png)
+
 Applazos está basada en otra aplicación que tenía (y todavía está) en desarrollo, FlourBar, que he ido retocando durante estos días.
